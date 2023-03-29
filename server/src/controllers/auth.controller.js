@@ -2,6 +2,8 @@ import { validate }   from "../controllers/functions.controller.js"
 import { Database }   from "../database/mysql.database.js"
 import bcrypt         from "bcrypt"
 import { conn }       from "../models/mysql.connection.js"
+import jwt            from "jsonwebtoken"
+import cookie         from "cookie-parser"
 
 const auth_controller = {}
 
@@ -57,9 +59,24 @@ auth_controller.login = async(req, res) => {
     return res.status(response.status).json(response)
   }
 
+  const token = jwt.sign(email_query[0][0], process.env.SECRET_KEY)
+
+  console.log(token)
+
   response.data = `Welcome ${email_query[0][0].name}!`
 
-  res.status(response.status).json(response)
+  res.cookie("token", token).status(response.status).json(response)
+}
+
+auth_controller.logout = (req, res) => {
+  const user_token = req.cookies.token
+  
+  if(!user_token){
+    res.status(200).send("There's no an active session!")
+  }
+  const user = jwt.verify(user_token, process.env.SECRET_KEY)
+  console.log(`See ya ${user.name}`)
+  res.clearCookie("token").send("I hope you come back soon!")
 }
 
 export {auth_controller}
