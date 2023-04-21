@@ -5,7 +5,7 @@ export class Database{
       status: true
     }
     
-    switch (query) {
+    switch (query.toLowerCase()) {
       case "database":
         response.sql += `CREATE DATABASE ${data.name}`
       break;
@@ -63,7 +63,6 @@ export class Database{
         }
       break
 
-
       default:
         response.status = false
       break;
@@ -79,7 +78,7 @@ export class Database{
 
     switch (query) {
       case "select":
-        if(data.condition){
+        if(data?.condition){
           response.sql += `SELECT ${data.columns} FROM ${data.name} WHERE ${data.condition}`
         }else{
           response.sql += `SELECT ${data.columns} FROM ${data.name}`
@@ -96,7 +95,27 @@ export class Database{
   }
 
   update = (query, data) => {
+    let response = {
+      sql: "",
+      status: true
+    }
 
+    switch(query){
+      case "update":
+        response.sql = `UPDATE ${data.name} SET `
+        if(data.columns?.length){
+          data.columns.forEach((column, index) => {
+            response.sql += `${column} = ${data.newValues[i]}`
+            if(index != data.columns.length - 1) response.sql += ", "
+          })
+          response.sql += ` WHERE ${data.condition};`
+        }
+      break
+      default:
+        response.status = false
+    }
+
+    return response
   }
 
   delete = (query, data) => {

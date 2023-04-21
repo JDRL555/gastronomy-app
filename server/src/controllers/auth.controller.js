@@ -1,32 +1,34 @@
 import { validate }   from "../controllers/functions.controller.js"
 import { Database }   from "../database/mysql.database.js"
-import bcrypt         from "bcrypt"
 import { conn }       from "../models/mysql.connection.js"
+import bcrypt         from "bcrypt"
 import jwt            from "jsonwebtoken"
-import cookie         from "cookie-parser"
 
 const auth_controller = {}
+const mysql = new Database()
 
 auth_controller.register = async (req, res) => {
-  const data = req.body
-  let response = validate(data, ["name", "last_name", "email", "phone", "password", "confirm"])
-
-  if(response.empty_values){
-    return res.status(response.status).json(response)
+  try {
+    const data = req.body
+    let response = validate(data, ["name", "last_name", "email", "phone", "password", "confirm"])
+  
+    if(response.empty_values){
+      return res.status(response.status).json(response)
+    }
+  
+    data.password = await bcrypt.hash(data.password, 10)
+  
+    const query = mysql.create("insert", {
+      name: "users",
+      values: data
+    })
+  
+    response.data = await conn.query(query)
+  
+    return res.status(response.status).json({response, query})
+  } catch (error) {
+    return res.status(400).json(error)
   }
-
-  data.password = await bcrypt.hash(data.password, 10)
-
-  const mysql = new Database()
-
-  const query = mysql.create("insert", {
-    name: "users",
-    values: data
-  })
-
-  response.data = await conn.query(query)
-
-  return res.status(response.status).json({response, query})
 }
 
 auth_controller.login = async(req, res) => {
@@ -37,7 +39,6 @@ auth_controller.login = async(req, res) => {
     return res.status(response.status).json(response)
   }
 
-  const mysql = new Database()
   let query = mysql.read("select", {
     name: "users",
     columns: "*",
