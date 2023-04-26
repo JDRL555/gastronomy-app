@@ -1,0 +1,53 @@
+.categories {
+  display: flex;
+}
+
+.comida_salada, .reposteria{
+  padding: 20px;
+  width: 50%;
+}
+
+.comida_salada .img_content, .reposteria .img_content{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  border-radius: 6px;
+  background-size: cover;
+  cursor:pointer ;
+  width: 100%;
+  height: 200px;
+  transition: all .5s ease-out;
+}
+
+.comida_salada .img_content {
+  background-image: url("../public/img/SIU.jpg");
+}
+
+.reposteria .img_content {
+  background-image: url("../public/img/2.jpg");
+}
+  
+.comida_salada .img_content:hover{
+  background-image: linear-gradient(rgba(243, 221, 96, 0.377), rgba(243, 221, 96, 0.377)), url("../public/img/SIU.jpg");
+}
+
+.reposteria .img_content:hover {
+  background-image: linear-gradient(rgba(243, 221, 96, 0.377), rgba(243, 221, 96, 0.377)), url("../public/img/2.jpg");
+}
+
+.comida_salada h3, .reposteria h3{
+  color:#fff;
+  background-color: black;
+  text-align: center;
+  width: 100%;
+  padding: 5px;
+  margin-top: 30px;
+  visibility: hidden;
+}
+
+.comida_salada .img_content:hover h3, .reposteria .img_content:hover h3{
+  transition: 2s;
+  visibility: visible;
+  margin-top: 90px;
+  margin-bottom: 15px;
+}

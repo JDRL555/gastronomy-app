@@ -1,0 +1,8 @@
+.post_container {
+  width: 100%;
+  background-color: goldenrod;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 30px;
+}
