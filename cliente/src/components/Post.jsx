@@ -1,11 +1,10 @@
 import "../styles/Post.css"
-
-export default function Post({img, title, description}) {
+export default function Post({title, description, img}) {
   return (
     <div className="post">
       <img src={img} />
-      <div className="post_info">
-        <h2>{title}</h2>
+      <div>
+        <h1>{title}</h1>
         <p>{description}</p>
       </div>
     </div>

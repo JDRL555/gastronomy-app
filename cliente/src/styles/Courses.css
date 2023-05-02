@@ -1,0 +1,17 @@
+.course_container {
+  text-align: center;
+  background-color: goldenrod;
+}
+
+.course_container h1 {
+  padding: 10px;
+  font-size: 40px;
+}
+
+.courses_container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  padding: 0 30px 30px;
+}
