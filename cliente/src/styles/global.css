@@ -7,12 +7,6 @@
 
 body {
   background-color: black;
+  color: white;
   overflow-x: hidden;
 }
-
-.piedepagina{
-  background-color: black;
-  color: white;
-  padding: 100px;
-}
-

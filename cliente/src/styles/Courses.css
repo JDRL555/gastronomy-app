@@ -1,6 +1,7 @@
 .course_container {
   text-align: center;
   background-color: goldenrod;
+  color: black;
 }
 
 .course_container h1 {

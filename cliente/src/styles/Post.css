@@ -11,6 +11,7 @@
 .post div{
   width: 35rem;
   white-space: normal;
+  color: black;
 }
 
 .post div h1 {
